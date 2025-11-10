@@ -1,43 +1,42 @@
 #pragma once
 
+#include "Foundation.h"
 #include <string>
 #include <format>
-#include "Foundation.h"
 
 namespace Yip {
 namespace Math {
 
-#pragma region TVector3
+#pragma region TVector4
 
-/**
-** Row major Vector3
-**/
 template<typename Scalar>
-class FOUNDATION_API TVector3
+class FOUNDATION_API TVector4
 {
 public:
-	using Type = TVector3<Scalar>;
+	using Type = TVector4<Scalar>;
 
-	inline TVector3() = default;
-	inline TVector3(const Type& other) = default;
+	inline TVector4() = default;
+	inline TVector4(const Type& other) = default;
 	inline Type& operator=(const Type& other) = default;
 
 	//! \brief ctor
-	inline TVector3(Scalar x, Scalar y, Scalar z) : x(x), y(y), z(z) {}
+	inline TVector4(Scalar x, Scalar y, Scalar z, Scalar w)
+		: x(x), y(y), z(z), w(w)
+	{
+	}
 
 	inline bool operator==(const Type& other)
 	{
-		return x == other.x && y == other.y && z == other.z;
+		return x == other.x && y == other.y && z == other.z && w == other.w;
 	}
 	inline bool operator!=(const Type& other)
 	{
 		return !(*this == other);
 	}
-
 	
 	inline Type operator+(const Type& other)
 	{
-		return Type(x + other.x, y + other.y, z + other.z);
+		return Type(x + other.x, y + other.y, z + other.z, w + other.w);
 	}
 
 	inline void operator+=(const Type& other)
@@ -45,11 +44,12 @@ public:
 		x += other.x;
 		y += other.y;
 		z += other.z;
+		w += other.w;
 	}
 
 	inline Type operator-(const Type& other)
 	{
-		return Type(x - other.x, y - other.y, z - other.z);
+		return Type(x - other.x, y - other.y, z - other.z, w - other.w);
 	}
 
 	inline void operator-=(const Type& other)
@@ -57,12 +57,13 @@ public:
 		x -= other.x;
 		y -= other.y;
 		z -= other.z;
+		w -= other.w;
 	}
 
 	template<typename ScaleScalar>
 	inline Type operator*(const ScaleScalar& scale)
 	{
-		return Type(x * scale, y * scale, z * scale);
+		return Type(x * scale, y * scale, z * scale, w * scale);
 	}
 
 	template<typename ScaleScalar>
@@ -71,12 +72,13 @@ public:
 		x *= scale;
 		y *= scale;
 		z *= scale;
+		w *= scale;
 	}
 
 	template<typename ScaleScalar>
 	inline Type operator/(const ScaleScalar& scale)
 	{
-		return Type(x / scale, y / scale, z / scale);
+		return Type(x / scale, y / scale, z / scale, w / scale);
 	}
 
 	template<typename ScaleScalar>
@@ -85,19 +87,20 @@ public:
 		x /= scale;
 		y /= scale;
 		z /= scale;
+		w /= scale;
 	}
 
 	std::string ToString() const
 	{
-		return std::format("Vector3({}, {}, {})", x, y, z);
+		return std::format("Vector4({}, {}, {}, {})", x, y, z, w);
 	}
 
 public:
-	Scalar x, y, z;
+	Scalar x, y, z, w;
 };
 
 
-#pragma endregion TVector3
+#pragma endregion TVector4
 
 } // namespace Math
 } // namespace Yip
